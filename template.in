@@ -1,0 +1,19 @@
+######### input of TOFED#########
+
+/run/numberOfThreads 4
+/run/initialize
+/tracking/verbose 0
+
+######## input of source information ####
+
+/TOF/Gun/GPSFlag self
+/TOF/Gun/SourceRadius 2.0 cm
+/TOF/Gun/ParticleName neutron
+/TOF/Gun/SourceType mono
+/TOF/Gun/SourceEnergy 2.0 keV
+#/TOF/Gun/SEconst 0.00 keV
+#-76.5 cm is just in front of s1 detector.
+/TOF/Gun/SourcePosition_z -76.5 cm
+/TOF/Gun/MomentumThetaRange 0.6 deg
+
+/run/beamOn 5000000
