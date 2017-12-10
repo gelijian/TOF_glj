@@ -204,7 +204,6 @@ G4VPhysicalVolume* TOFDetectorConstruction::DefineVolumes()
     G4double S2u_angle = 2 * 25 * deg;  //flight angle
     G4double S2b_angle = 2 * 35 * deg;  //flight angle
 
-
     //---------S1detector---------
     
     //S1_scintillator
@@ -387,7 +386,6 @@ G4VPhysicalVolume* TOFDetectorConstruction::DefineVolumes()
     Trb = G4Transform3D(Rab_scin, Tab);
     S2b_detector->AddPlacedVolume(S2b_scinLV, Trb);
     
-    
     //S2bdetector placement
     for (G4int i = 0; i < NumberOfPairs; i++)
     {
@@ -404,10 +402,6 @@ G4VPhysicalVolume* TOFDetectorConstruction::DefineVolumes()
         G4Transform3D transform = G4Transform3D(rotm, pos);
         S2b_detector->MakeImprint(expHallLV, transform);
     }
-    
-    //--------- shelding -------------------------------
-    
-    
     
     //--------- Visualization attributes -------------------------------
     
@@ -455,7 +449,6 @@ G4VPhysicalVolume* TOFDetectorConstruction::DefineVolumes()
     //------------------------------------------------------------------
     
     return expHallPV;
-
 }
  
 void TOFDetectorConstruction::ConstructSDandField()
@@ -476,7 +469,6 @@ void TOFDetectorConstruction::ConstructSDandField()
     G4VSensitiveDetector* S2b_scinSD = new TOFscinSD(SDname = "S2b_scinSD", HCname = "s2b_hitscollection");
     SDmanager->AddNewDetector(S2b_scinSD);
     S2b_scinLV->SetSensitiveDetector(S2b_scinSD);
-    
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

@@ -100,10 +100,6 @@ void TOFEventAction::EndOfEventAction(const G4Event* event)
 	G4double s1_phlight[5];
 	G4double s2u_phlight[40];
 	G4double s2b_phlight[40];
-	G4double sigma;
-	G4double tmean;
-	sigma = 0.6 / 2.35;
-	tmean=0.0;
     
     //init
     for (G4int i = 0; i < 5; i++)
@@ -131,7 +127,6 @@ void TOFEventAction::EndOfEventAction(const G4Event* event)
 		s1_phlight[DetID] += Songresp(Edep, Pname);
 		if (s1_time[DetID] < 0 || Time < s1_time[DetID])
 		{
-			//s1_time[DetID] = Time + (G4RandGauss::shoot(tmean,sigma));
 			s1_time[DetID] = Time;
 		}
 	}
@@ -145,7 +140,6 @@ void TOFEventAction::EndOfEventAction(const G4Event* event)
 		s2u_phlight[DetID] += Songresp(Edep, Pname);
 		if (s2u_time[DetID] < 0 || Time < s2u_time[DetID])
 		{
-			//s2u_time[DetID] = Time + (G4RandGauss::shoot(tmean,sigma));
 			s2u_time[DetID] = Time;
 		} 
 	}
@@ -160,13 +154,12 @@ void TOFEventAction::EndOfEventAction(const G4Event* event)
 		s2b_phlight[DetID] += Songresp(Edep, Pname);
 		if (s2b_time[DetID] < 0 || Time < s2b_time[DetID])
 		{
-			//s2b_time[DetID] = Time + (G4RandGauss::shoot(tmean,sigma));
 			s2b_time[DetID] = Time;
 		} 
 	}
 
-    G4double s1PhThreshold = 5;
-    G4double s2PhThreshold = 5;
+    G4double s1PhThreshold = 1;
+    G4double s2PhThreshold = 1;
     
     //S2_up(detID < 40) S2_bottom(detID >= 40)
 	for(int iS1No = 0; iS1No < 5;iS1No++)
