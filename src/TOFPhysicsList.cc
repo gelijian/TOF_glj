@@ -22,9 +22,9 @@
 #include "G4HadronHElasticPhysics.hh"
 
 
-
 #include "TOFPhysicsList.hh"
 #include "G4UnitsTable.hh"
+#include "G4SystemOfUnits.hh"
 #include <iomanip>
 using namespace std;
 
@@ -100,7 +100,7 @@ void TOFPhysicsList::ConstructHadrPhys()
     // TrackingCut of Neutron,  energy: 10keV
 	G4NeutronTrackingCut* NeuCut = new G4NeutronTrackingCut("nTackingCut",verboseLevel);
     hadronPhys.push_back(NeuCut);
-    NeuCut->SetKineticEnergyLimit(1.0E-3*MeV);   // 10keV
+    NeuCut->SetKineticEnergyLimit(5 * keV);
 }
 
 void TOFPhysicsList::SetCuts()

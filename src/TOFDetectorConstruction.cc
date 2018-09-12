@@ -177,16 +177,15 @@ G4VPhysicalVolume* TOFDetectorConstruction::DefineVolumes()
                                   0,
                                   fCheckOverlaps);
     
-    G4double Wall_x = expHall_x;
-    G4double Wall_y = expHall_y;
+    G4double Wall_x = 120 * cm;
+    G4double Wall_y = 120 * cm;
     G4double Wall_z = 20 * cm;
-    G4ThreeVector pos_Wall = G4ThreeVector(0, 0, 150 * cm);
+    G4ThreeVector pos_Wall = G4ThreeVector(0, 0, 100 * cm);
     
     G4Box * WallSV = new G4Box("WallSV", Wall_x, Wall_y, Wall_z);
     
     WallLV = new G4LogicalVolume(WallSV, ConcreteMaterial, "WallLV");
     
-    /*
     G4VPhysicalVolume* WallPV = new G4PVPlacement(0,
                                                   pos_Wall,
                                                   WallLV,
@@ -195,7 +194,6 @@ G4VPhysicalVolume* TOFDetectorConstruction::DefineVolumes()
                                                   false,
                                                   0,
                                                   fCheckOverlaps);
-    */                              
                                
     //--------- the principal geometrical components---------
     G4double TOFRadius   =  75.0 * cm;
@@ -220,26 +218,26 @@ G4VPhysicalVolume* TOFDetectorConstruction::DefineVolumes()
     S1_MSLV = new G4LogicalVolume(S1_MSSV, MSMaterial, "S1_MSLV");
     
     //S1 fishtail Light guide 
-    G4Tubs	*S1_tracSV = new G4Tubs("S1_tracSV", 0. , S1_scinRadius, S1_scinHalfThickness + 1 * mm, 0 * deg, 360 * deg);
+    G4Tubs  *S1_tracSV = new G4Tubs("S1_tracSV", 0. , S1_scinRadius, S1_scinHalfThickness + 1 * mm, 0 * deg, 360 * deg);
     G4Box* S1_LGboxSVtemp = new G4Box("S1_LGboxSVtemp", S1_scinRadius, 30 * mm, S1_scinHalfThickness);
     G4SubtractionSolid* S1_LGboxSV = new G4SubtractionSolid("S1_LGboxSV", S1_LGboxSVtemp, S1_tracSV);
-	G4Trd* S1_LGFish_up = new G4Trd("S1_LGfish", 11.5 * mm, 20 * mm, 11.5 * mm, 3 * mm, 46 * mm);
-	G4Trd* S1_LGFish_down = new G4Trd("S1_LGfish", 11.5 * mm, 20 * mm, 11.5 * mm, 3 * mm, 46 * mm);
+    G4Trd* S1_LGFish_up = new G4Trd("S1_LGfish", 11.5 * mm, 20 * mm, 11.5 * mm, 3 * mm, 46 * mm);
+    G4Trd* S1_LGFish_down = new G4Trd("S1_LGfish", 11.5 * mm, 20 * mm, 11.5 * mm, 3 * mm, 46 * mm);
 
     G4RotationMatrix Rot_up;
-	Rot_up.rotateX(90 * deg);
-	G4ThreeVector trans_up = G4ThreeVector(0.0, 76 * mm, 0.0);
+    Rot_up.rotateX(90 * deg);
+    G4ThreeVector trans_up = G4ThreeVector(0.0, 76 * mm, 0.0);
     G4Transform3D transform_up(Rot_up, trans_up);
     
     G4RotationMatrix Rot_down;
-	Rot_down.rotateX(-90 * deg);
-	G4ThreeVector trans_down = G4ThreeVector(0.0, -76 * mm, 0.0);
+    Rot_down.rotateX(-90 * deg);
+    G4ThreeVector trans_down = G4ThreeVector(0.0, -76 * mm, 0.0);
     G4Transform3D transform_down(Rot_down, trans_down);
 
-	G4UnionSolid* S1_LGsingleside = new G4UnionSolid("S1_LGsingleside", S1_LGboxSV, S1_LGFish_down, transform_down);
-	G4UnionSolid* S1_LGSV = new G4UnionSolid("S1_LGSV", S1_LGsingleside, S1_LGFish_up, transform_up);
-	S1_LGLV = new G4LogicalVolume(S1_LGSV, LGMaterial, "S1_LGLV");
-	
+    G4UnionSolid* S1_LGsingleside = new G4UnionSolid("S1_LGsingleside", S1_LGboxSV, S1_LGFish_down, transform_down);
+    G4UnionSolid* S1_LGSV = new G4UnionSolid("S1_LGSV", S1_LGsingleside, S1_LGFish_up, transform_up);
+    S1_LGLV = new G4LogicalVolume(S1_LGSV, LGMaterial, "S1_LGLV");
+    
     //assemble all the parts of S1
     G4AssemblyVolume* S1_detector = new G4AssemblyVolume();
     G4ThreeVector Ta;
@@ -277,14 +275,14 @@ G4VPhysicalVolume* TOFDetectorConstruction::DefineVolumes()
         G4double pos_z =-TOFRadius + 2 * (i - 2) * (S1_scinHalfThickness + 0.5 * mm);
         G4ThreeVector pos = G4ThreeVector(0 * mm, 0 * mm, pos_z);
         G4RotationMatrix rot = G4RotationMatrix();
-        rot.rotateZ(phi);	  
+        rot.rotateZ(phi);     
         G4Transform3D transform = G4Transform3D(rot, pos);
         S1_detector->MakeImprint(expHallLV, transform);
     }
     
     //---------S2 magnetic shielding---------
-    G4Tubs*	S2_MSSV = new G4Tubs("S2_MSSV", 38.5 * mm, 48.5 * mm, 160 * mm, 0. * deg, 360 * deg);
-	S2_MSLV = new G4LogicalVolume(S2_MSSV, MSMaterial, "S2_MSLV");  
+    G4Tubs* S2_MSSV = new G4Tubs("S2_MSSV", 38.5 * mm, 48.5 * mm, 160 * mm, 0. * deg, 360 * deg);
+    S2_MSLV = new G4LogicalVolume(S2_MSSV, MSMaterial, "S2_MSLV");  
 
     //---------S2updetector---------
     
@@ -299,11 +297,11 @@ G4VPhysicalVolume* TOFDetectorConstruction::DefineVolumes()
     
     //S2u fishtail light guide
     G4Box* S2ulg1 = new G4Box("S2ulg1", 50 * mm, 8.5 * mm, 30 * mm);
-	G4Trd* S2ulg2 = new G4Trd("S2ulg2", 21.7 * mm, 50 * mm, 21.7 * mm, 8.5 * mm, 35 * mm);
-    G4Tubs*	S2ulg4 = new G4Tubs("S2ulg4", 0.0 , 25 * mm, 25 * mm, 0. * deg, 360 * deg);
-	G4UnionSolid* S2ulg3 = new G4UnionSolid("s2ulg3", S2ulg1, S2ulg2, 0 , G4ThreeVector(0.0, 0.0, -65*mm)); 
-	G4UnionSolid* S2u_LGSV = new G4UnionSolid("s2ulg", S2ulg3, S2ulg4, 0, G4ThreeVector(0.0,0.0,-125*mm)); 
-	S2u_LGLV = new G4LogicalVolume(S2u_LGSV, LGMaterial, "S2u_LGLV");
+    G4Trd* S2ulg2 = new G4Trd("S2ulg2", 21.7 * mm, 50 * mm, 21.7 * mm, 8.5 * mm, 35 * mm);
+    G4Tubs* S2ulg4 = new G4Tubs("S2ulg4", 0.0 , 25 * mm, 25 * mm, 0. * deg, 360 * deg);
+    G4UnionSolid* S2ulg3 = new G4UnionSolid("s2ulg3", S2ulg1, S2ulg2, 0 , G4ThreeVector(0.0, 0.0, -65*mm)); 
+    G4UnionSolid* S2u_LGSV = new G4UnionSolid("s2ulg", S2ulg3, S2ulg4, 0, G4ThreeVector(0.0,0.0,-125*mm)); 
+    S2u_LGLV = new G4LogicalVolume(S2u_LGSV, LGMaterial, "S2u_LGLV");
     
     //assemble all the parts of S2u
     G4AssemblyVolume* S2u_detector = new G4AssemblyVolume();
@@ -359,9 +357,9 @@ G4VPhysicalVolume* TOFDetectorConstruction::DefineVolumes()
     
     //S2b fishtail light guide
     G4Trd* S2blg1 = new G4Trd("S2blg1", 21.7 * mm, 55 * mm, 21.7 * mm, 8.5 * mm, 40 * mm);
-    G4Tubs*	S2blg2	=	new	G4Tubs("S2blg2", 0.0, 25 * mm, 25 * mm, 0. * deg, 360 * deg);
-	G4UnionSolid* S2b_LGSV = new G4UnionSolid("s2b_LGSV", S2blg1, S2blg2, 0, G4ThreeVector(0.0,0.0,-65*mm)); 
-	S2b_LGLV = new G4LogicalVolume(S2b_LGSV, LGMaterial, "S2b_LGLV");	
+    G4Tubs* S2blg2  =   new G4Tubs("S2blg2", 0.0, 25 * mm, 25 * mm, 0. * deg, 360 * deg);
+    G4UnionSolid* S2b_LGSV = new G4UnionSolid("s2b_LGSV", S2blg1, S2blg2, 0, G4ThreeVector(0.0,0.0,-65*mm)); 
+    S2b_LGLV = new G4LogicalVolume(S2b_LGSV, LGMaterial, "S2b_LGLV");   
     
     //assemble all the parts of S2b
     G4AssemblyVolume* S2b_detector = new G4AssemblyVolume();

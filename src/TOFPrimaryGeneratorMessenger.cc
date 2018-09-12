@@ -28,7 +28,7 @@ TOFPrimaryGeneratorMessenger::TOFPrimaryGeneratorMessenger(TOFPrimaryGeneratorAc
 	ParticleNameCmd->SetDefaultValue("neutron");
 	ParticleNameCmd->SetCandidates("gamma neutron");
 	ParticleNameCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
-	
+
 	SourceTypeCmd = new G4UIcmdWithAString("/TOF/Gun/SourceType", this);
 	SourceTypeCmd->SetGuidance("Set Type of source energy");
 	SourceTypeCmd->SetGuidance("SourceType : mono(default), flat, Cf252, expdecay, gauss, rect");
@@ -43,27 +43,27 @@ TOFPrimaryGeneratorMessenger::TOFPrimaryGeneratorMessenger(TOFPrimaryGeneratorAc
 	SourceEnergyCmd -> SetRange("SourceEnergy>0.");
 	SourceEnergyCmd -> SetUnitCategory("Energy");
 	SourceEnergyCmd -> AvailableForStates(G4State_PreInit, G4State_Idle);
- 
+
 	SEconst = new G4UIcmdWithADoubleAndUnit("/TOF/Gun/SEconst",this);
 	SEconst -> SetGuidance("Set energy constant of sourse");
 	SEconst -> SetParameterName("SEconst",false);
 	SEconst -> SetRange("SEconst>=0.");
 	SEconst -> SetUnitCategory("Energy");
 	SEconst -> AvailableForStates(G4State_PreInit,G4State_Idle);
-  
+
 	SourceRadiusCmd = new G4UIcmdWithADoubleAndUnit("/TOF/Gun/SourceRadius",this);
 	SourceRadiusCmd -> SetGuidance("Set radius of source");
 	SourceRadiusCmd -> SetParameterName("SourceRadius",false);
 	SourceRadiusCmd -> SetRange("SourceRadius>=0.");
 	SourceRadiusCmd -> SetUnitCategory("Length");
 	SourceRadiusCmd -> AvailableForStates(G4State_PreInit, G4State_Idle);
-  
+
 	SourcePosition_zCmd = new G4UIcmdWithADoubleAndUnit("/TOF/Gun/SourcePosition_z",this);
 	SourcePosition_zCmd -> SetGuidance("Set z position of source");
 	SourcePosition_zCmd -> SetParameterName("SourcePosition_z",false);
 	SourcePosition_zCmd -> SetUnitCategory("Length");
 	SourcePosition_zCmd -> AvailableForStates(G4State_PreInit,G4State_Idle);
-	
+
 	MomentumThetaRangeCmd = new G4UIcmdWithADoubleAndUnit("/TOF/Gun/MomentumThetaRange", this);
 	MomentumThetaRangeCmd -> SetGuidance("Set the source momentum direction range");
 	MomentumThetaRangeCmd -> SetParameterName("MomentumThetaRange", false);
@@ -86,13 +86,13 @@ TOFPrimaryGeneratorMessenger::~TOFPrimaryGeneratorMessenger()
 
 void TOFPrimaryGeneratorMessenger::SetNewValue(G4UIcommand* command, G4String value)
 {
-	if(command == GPSFlagCmd) 
+	if(command == GPSFlagCmd)
 	{  Action -> SetGPSFlag(value); }
 
-	if(command == ParticleNameCmd) 
+	if(command == ParticleNameCmd)
 	{  Action -> SetParticleName(value); }
 
-	if(command == SourceTypeCmd) 
+	if(command == SourceTypeCmd)
 	{  Action -> SetSoureType(value); }
 
 	if( command == SourceEnergyCmd)
@@ -106,7 +106,7 @@ void TOFPrimaryGeneratorMessenger::SetNewValue(G4UIcommand* command, G4String va
 
 	if( command == SEconst)
 	{ Action -> SetEnergyConst(SEconst -> GetNewDoubleValue(value));}
-	
+
 	if( command == MomentumThetaRangeCmd)
 	{ Action -> SetMomentumDirection(MomentumThetaRangeCmd -> GetNewDoubleValue(value));}
 

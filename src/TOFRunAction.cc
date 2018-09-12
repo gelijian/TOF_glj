@@ -47,14 +47,36 @@ TOFRunAction::TOFRunAction()
     
     // Creating ntuple
     //
+    analysisManager->SetFirstNtupleId(1);
+    
+    analysisManager->CreateNtuple("S1", "S1event");
+    analysisManager->CreateNtupleDColumn(1, "time");
+    analysisManager->CreateNtupleDColumn(1, "Eee_s1");
+    analysisManager->CreateNtupleIColumn(1, "s1ID");
+    analysisManager->CreateNtupleIColumn(1, "eventID");
+    analysisManager->CreateNtupleIColumn(1, "s1ProtonHits");
+    analysisManager->CreateNtupleIColumn(1, "s1CarbonHits");
+    analysisManager->FinishNtuple(1);
+    
+    /*
+    analysisManager->CreateNtuple("S2", "S2event");
+    analysisManager->CreateNtupleDColumn(2, "time");
+    analysisManager->CreateNtupleDColumn(2, "Eee_s2");
+    analysisManager->CreateNtupleIColumn(2, "s2ID");
+    analysisManager->CreateNtupleIColumn(2, "eventID");
+    analysisManager->CreateNtupleIColumn(2, "s2trackID");
+    analysisManager->FinishNtuple(2);
+    */
+    
     analysisManager->CreateNtuple("TOF", "TOFevent");
-    analysisManager->CreateNtupleDColumn("TimeOfFlight");
-    analysisManager->CreateNtupleDColumn("Eee_s1");
-    analysisManager->CreateNtupleDColumn("Eee_s2");
-    analysisManager->CreateNtupleIColumn("S1ID");
-    analysisManager->CreateNtupleIColumn("S2ID");
-    analysisManager->CreateNtupleIColumn("eventID");
-    analysisManager->FinishNtuple();
+    analysisManager->CreateNtupleDColumn(2, "TimeOfFlight");
+    analysisManager->CreateNtupleDColumn(2, "Eee_s1");
+    analysisManager->CreateNtupleDColumn(2, "Eee_s2");
+    analysisManager->CreateNtupleIColumn(2, "s1ID");
+    analysisManager->CreateNtupleIColumn(2, "s2ID");
+    analysisManager->CreateNtupleIColumn(2, "eventID");
+    //analysisManager->CreateNtupleIColumn(3, "s2trackID");
+    analysisManager->FinishNtuple(2);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
